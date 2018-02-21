@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(PackageTest C)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(SKIP_RPATH)
+conan_basic_setup()
 
 if (UNIX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
