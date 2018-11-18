@@ -8,8 +8,12 @@ class ExpatConan(ConanFile):
     url = "https://github.com/Pix4D/conan-expat"
     source_url = "https://github.com/libexpat/libexpat"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {"shared": [True, False],
+               "static_crt": [True, False],
+              }
+    default_options = "shared=False", \
+        "static_crt=False"
+
     generators = "cmake"
     exports_sources = ['FindExpat.cmake']
 
@@ -31,6 +35,7 @@ conan_basic_setup()
                        "BUILD_tests" : "OFF",
                        "BUILD_tools" : "OFF",
                        "CMAKE_POSITION_INDEPENDENT_CODE": "ON",
+                       "MSVC_USE_STATIC_CRT": self.options.static_crt,
                      }
 
         cmake.configure(source_dir="../libexpat/expat", build_dir="build", defs=cmake_args)
