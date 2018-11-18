@@ -23,7 +23,7 @@ include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
 conan_basic_setup()
 """)
 
-        cmake = CMake(self, parallel=True)
+        cmake = CMake(self)
 
         cmake_args = { "BUILD_doc" : "OFF",
                        "BUILD_examples" : "OFF",
@@ -34,7 +34,8 @@ conan_basic_setup()
                      }
 
         cmake.configure(source_dir="../libexpat/expat", build_dir="build", defs=cmake_args)
-        cmake.build(target="install")
+        cmake.build()
+        cmake.install()
 
     def package(self):
         self.copy("FindExpat.cmake", ".", ".")
