@@ -1,27 +1,33 @@
 from conans import ConanFile, CMake, tools
 
 class ExpatConan(ConanFile):
-    """ This recipe requires conan 0.25.1 at least"""
-
     name = "Expat"
-    version = "2.2.5"
+    version = "2.2.6"
     description = "Recipe for Expat library"
     license = "MIT/X Consortium license. Check file COPYING of the library"
     url = "https://github.com/Pix4D/conan-expat"
     source_url = "https://github.com/libexpat/libexpat"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {"shared": [True, False],
+               "static_crt": [True, False],
+              }
+    default_options = "shared=False", \
+        "static_crt=False"
+
     generators = "cmake"
-    exports_sources = ['FindExpat.cmake', 'patches/*']
+    exports_sources = ['FindExpat.cmake']
 
     def source(self):
-        self.run("git clone --depth 1 --branch R_2_2_5 %s" % self.source_url)
+        self.run("git clone --depth 1 --branch R_2_2_6 %s" % self.source_url)
 
     def build(self):
-        tools.patch(base_path = "libexpat", patch_file="patches/useConanFileAndIncreaseCMakeVersion.patch")
+        tools.replace_in_file("libexpat/expat/CMakeLists.txt", "cmake_minimum_required(VERSION 2.8.10)",
+            """cmake_minimum_required(VERSION 2.8.10)
+include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
+conan_basic_setup()
+""")
 
-        cmake = CMake(self, parallel=True)
+        cmake = CMake(self)
 
         cmake_args = { "BUILD_doc" : "OFF",
                        "BUILD_examples" : "OFF",
@@ -29,10 +35,12 @@ class ExpatConan(ConanFile):
                        "BUILD_tests" : "OFF",
                        "BUILD_tools" : "OFF",
                        "CMAKE_POSITION_INDEPENDENT_CODE": "ON",
+                       "MSVC_USE_STATIC_CRT": self.options.static_crt,
                      }
 
         cmake.configure(source_dir="../libexpat/expat", build_dir="build", defs=cmake_args)
-        cmake.build(target="install")
+        cmake.build()
+        cmake.install()
 
     def package(self):
         self.copy("FindExpat.cmake", ".", ".")
