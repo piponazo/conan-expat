@@ -10,8 +10,10 @@ class ExpatConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False],
                "static_crt": [True, False],
+               "disable_getrandom": [True, False],
               }
     default_options = "shared=False", \
+        "disable_getrandom=True", \
         "static_crt=False"
 
     generators = "cmake"
@@ -39,6 +41,10 @@ conan_basic_setup()
                      }
 
         cmake.configure(source_dir="../libexpat/expat", build_dir="build", defs=cmake_args)
+
+        if self.options.disable_getrandom:
+            tools.replace_in_file("build/expat_config.h", "#define HAVE_GETRANDOM", "// #undef HAVE_GETRANDOM")
+
         cmake.build()
         cmake.install()
 
