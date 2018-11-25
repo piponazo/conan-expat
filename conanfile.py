@@ -1,4 +1,6 @@
 from conans import ConanFile, CMake, tools
+from conans.errors import ConanException
+
 
 class ExpatConan(ConanFile):
     name = "Expat"
@@ -10,8 +12,10 @@ class ExpatConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False],
                "static_crt": [True, False],
+               "disable_getrandom": [True, False],
               }
     default_options = "shared=False", \
+        "disable_getrandom=True", \
         "static_crt=False"
 
     generators = "cmake"
@@ -39,6 +43,15 @@ conan_basic_setup()
                      }
 
         cmake.configure(source_dir="../libexpat/expat", build_dir="build", defs=cmake_args)
+
+        try:
+            if self.options.disable_getrandom:
+                tools.replace_in_file("build/expat_config.h", "#define HAVE_GETRANDOM",
+                                                              "// #undef HAVE_GETRANDOM")
+                self.output.success("HAVE_GETRANDOM has been undefined by user request")
+        except ConanException:
+                self.output.warn("HAVE_GETRANDOM could not be undefined. It was not defined")
+
         cmake.build()
         cmake.install()
 
