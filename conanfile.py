@@ -19,7 +19,6 @@ class ExpatConan(ConanFile):
         "static_crt=False"
 
     generators = "cmake"
-    exports_sources = ['FindExpat.cmake']
 
     def source(self):
         self.run("git clone --depth 1 --branch R_2_2_6 %s" % self.source_url)
@@ -54,9 +53,6 @@ conan_basic_setup()
 
         cmake.build()
         cmake.install()
-
-    def package(self):
-        self.copy("FindExpat.cmake", ".", ".")
 
     def package_info(self):
         if self.settings.os == "Windows" and self.settings.build_type == "Debug":
