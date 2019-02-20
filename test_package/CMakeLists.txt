@@ -14,8 +14,9 @@ if (UNIX)
     endif ()
 endif ()
 
-find_package(Expat REQUIRED)
+find_package(EXPAT REQUIRED)
 
 add_executable(example example.c)
-target_link_libraries(example ${EXPAT_LIBRARY})
+target_link_libraries(example PRIVATE ${EXPAT_LIBRARY})
+target_include_directories(example PRIVATE ${EXPAT_INCLUDE_DIRS})
 target_compile_definitions(example PRIVATE "-DXML_STATIC")
