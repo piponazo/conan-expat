@@ -38,6 +38,7 @@ conan_basic_setup()
                        "BUILD_tests" : "OFF",
                        "BUILD_tools" : "OFF",
                        "CMAKE_POSITION_INDEPENDENT_CODE": "ON",
+                       "CMAKE_DEBUG_POSTFIX": "",
                        "MSVC_USE_STATIC_CRT": self.options.static_crt,
                      }
 
@@ -55,10 +56,7 @@ conan_basic_setup()
         cmake.install()
 
     def package_info(self):
-        if self.settings.os == "Windows" and self.settings.build_type == "Debug":
-            self.cpp_info.libs = ["expatd"]
-        else:
-            self.cpp_info.libs = ["expat"]
+        self.cpp_info.libs = ["expat"]
         if not self.options.shared:
             self.cpp_info.defines = ["XML_STATIC"]
 
