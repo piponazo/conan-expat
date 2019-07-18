@@ -4,7 +4,7 @@ environment:
     PYTHON: "C:\\Python37"
     CONAN_UPLOAD_ONLY_WHEN_STABLE: 1 # Will only upload when the branch matches "release/*"
 
-    CONAN_REFERENCE: "Expat/2.2.6"
+    CONAN_REFERENCE: "Expat/2.2.7"
     CONAN_USERNAME: "pix4d"
     CONAN_LOGIN_USERNAME: "piponazo"
     CONAN_CHANNEL: "testing"
@@ -27,6 +27,12 @@ environment:
           CONAN_BUILD_TYPES: Release
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
           CONAN_VISUAL_VERSIONS: 15
+          CONAN_BUILD_TYPES: Debug
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+          CONAN_VISUAL_VERSIONS: 16
+          CONAN_BUILD_TYPES: Release
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+          CONAN_VISUAL_VERSIONS: 16
           CONAN_BUILD_TYPES: Debug
           
 

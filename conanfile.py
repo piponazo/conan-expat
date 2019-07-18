@@ -4,24 +4,28 @@ from conans.errors import ConanException
 
 class ExpatConan(ConanFile):
     name = "Expat"
-    version = "2.2.6"
+    version = "2.2.7"
     description = "Recipe for Expat library"
     license = "MIT/X Consortium license. Check file COPYING of the library"
     url = "https://github.com/Pix4D/conan-expat"
     source_url = "https://github.com/libexpat/libexpat"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False],
-               "static_crt": [True, False],
-               "disable_getrandom": [True, False],
-              }
-    default_options = "shared=False", \
-        "disable_getrandom=True", \
-        "static_crt=False"
+    options = {
+        "shared": [True, False],
+        "static_crt": [True, False],
+        "disable_getrandom": [True, False],
+    }
+    default_options = {
+        "shared": False,
+        "disable_getrandom": True,
+        "static_crt": False,
+    }
 
     generators = "cmake"
 
     def source(self):
-        self.run("git clone --depth 1 --branch R_2_2_6 %s" % self.source_url)
+        branch = "R_%s" % self.version.replace(".", "_")
+        self.run("git clone --depth 1 --branch %s %s" % (branch, self.source_url))
 
     def build(self):
         tools.replace_in_file("libexpat/expat/CMakeLists.txt", "cmake_minimum_required(VERSION 2.8.10)",
