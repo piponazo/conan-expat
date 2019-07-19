@@ -7,7 +7,7 @@ environment:
     CONAN_REFERENCE: "Expat/2.2.7"
     CONAN_USERNAME: "pix4d"
     CONAN_LOGIN_USERNAME: "piponazo"
-    CONAN_CHANNEL: "testing"
+    CONAN_CHANNEL: "stable"
     
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015

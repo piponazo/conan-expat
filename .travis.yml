@@ -3,7 +3,7 @@ env:
      - CONAN_REFERENCE: "Expat/2.2.7"
      - CONAN_USERNAME: "pix4d"
      - CONAN_LOGIN_USERNAME: "piponazo"
-     - CONAN_CHANNEL: "testing"
+     - CONAN_CHANNEL: "stable"
      - CONAN_STABLE_BRANCH_PATTERN: "release/*"
      - CONAN_UPLOAD_ONLY_WHEN_STABLE: 1 # Will only upload when the branch matches "release/*"
      
