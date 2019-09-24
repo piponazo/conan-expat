@@ -54,7 +54,7 @@ class ExpatConan(ConanFile):
                                                               "// #undef HAVE_GETRANDOM")
                 self.output.success("HAVE_GETRANDOM has been undefined by user request")
         except ConanException:
-                self.output.warn("HAVE_GETRANDOM could not be undefined. It was not defined")
+            self.output.warn("HAVE_GETRANDOM could not be undefined. It was not defined")
 
         cmake.build()
         cmake.install()
