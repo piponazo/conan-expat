@@ -28,21 +28,11 @@ class ExpatConan(ConanFile):
         self.run("git clone --depth 1 --branch %s %s" % (branch, self.source_url))
 
     def build(self):
-        tools.replace_in_file("libexpat/expat/CMakeLists.txt", """project(expat
-    VERSION
-        2.2.8
-    LANGUAGES
-        C
-)""", """project(expat
-    VERSION
-        2.2.8
-    LANGUAGES
-        C
-)
-
-include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
-conan_basic_setup()
-""")
+        tools.replace_in_file("libexpat/expat/CMakeLists.txt",
+                              'set(PACKAGE_BUGREPORT "expat-bugs@libexpat.org")',
+                              ''' include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
+  conan_basic_setup()
+  set(PACKAGE_BUGREPORT "expat-bugs@libexpat.org")''')
 
         cmake = CMake(self)
 
