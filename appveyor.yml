@@ -4,7 +4,7 @@ environment:
     PYTHON: "C:\\Python37"
     CONAN_UPLOAD_ONLY_WHEN_STABLE: 1 # Will only upload when the branch matches "release/*"
 
-    CONAN_REFERENCE: "Expat/2.2.7"
+    CONAN_REFERENCE: "Expat/2.2.8"
     CONAN_USERNAME: "pix4d"
     CONAN_LOGIN_USERNAME: "piponazo"
     CONAN_CHANNEL: "stable"

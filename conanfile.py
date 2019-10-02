@@ -4,7 +4,7 @@ from conans.errors import ConanException
 
 class ExpatConan(ConanFile):
     name = "Expat"
-    version = "2.2.7"
+    version = "2.2.8"
     description = "Recipe for Expat library"
     license = "MIT/X Consortium license. Check file COPYING of the library"
     url = "https://github.com/Pix4D/conan-expat"
@@ -28,11 +28,11 @@ class ExpatConan(ConanFile):
         self.run("git clone --depth 1 --branch %s %s" % (branch, self.source_url))
 
     def build(self):
-        tools.replace_in_file("libexpat/expat/CMakeLists.txt", "cmake_minimum_required(VERSION 2.8.10)",
-            """cmake_minimum_required(VERSION 2.8.10)
-include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
-conan_basic_setup()
-""")
+        tools.replace_in_file("libexpat/expat/CMakeLists.txt",
+                              'set(PACKAGE_BUGREPORT "expat-bugs@libexpat.org")',
+                              ''' include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
+  conan_basic_setup()
+  set(PACKAGE_BUGREPORT "expat-bugs@libexpat.org")''')
 
         cmake = CMake(self)
 
@@ -54,7 +54,7 @@ conan_basic_setup()
                                                               "// #undef HAVE_GETRANDOM")
                 self.output.success("HAVE_GETRANDOM has been undefined by user request")
         except ConanException:
-                self.output.warn("HAVE_GETRANDOM could not be undefined. It was not defined")
+            self.output.warn("HAVE_GETRANDOM could not be undefined. It was not defined")
 
         cmake.build()
         cmake.install()
