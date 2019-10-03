@@ -4,7 +4,7 @@ from conans.errors import ConanException
 
 class ExpatConan(ConanFile):
     name = "Expat"
-    version = "2.2.8"
+    version = "2.2.9"
     description = "Recipe for Expat library"
     license = "MIT/X Consortium license. Check file COPYING of the library"
     url = "https://github.com/Pix4D/conan-expat"
