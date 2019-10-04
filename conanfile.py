@@ -60,7 +60,7 @@ class ExpatConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        if self._the_os == "Windows":
+        if self.settings.os == "Windows":
             self.cpp_info.libs = ["libexpat"]
         else:
             self.cpp_info.libs = ["expat"]
